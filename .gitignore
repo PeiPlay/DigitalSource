@@ -1,3 +1,16 @@
 !MDK-ARM/ DigitalSource.uvoptx
 !MDK-ARM/ DigitalSource.uvprojx
 !MDK-ARM/ startup_stm32h750xx.s
+# Object and HEX files
+*.axf
+*.b[0-3][0-9]
+*.hex
+*.d
+*.crf
+*.elf
+*.hex
+*.h86
+*.lib
+*.obj
+*.o
+*.sbr
