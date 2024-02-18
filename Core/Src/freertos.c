@@ -47,33 +47,46 @@
 /* USER CODE BEGIN Variables */
 
 /* USER CODE END Variables */
-osThreadId defaultTaskHandle;
+/* Definitions for storageTask */
+osThreadId_t storageTaskHandle;
+const osThreadAttr_t storageTask_attributes = {
+  .name = "storageTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for displayTask */
+osThreadId_t displayTaskHandle;
+const osThreadAttr_t displayTask_attributes = {
+  .name = "displayTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for adjustTask */
+osThreadId_t adjustTaskHandle;
+const osThreadAttr_t adjustTask_attributes = {
+  .name = "adjustTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
+/* Definitions for uppercompTask */
+osThreadId_t uppercompTaskHandle;
+const osThreadAttr_t uppercompTask_attributes = {
+  .name = "uppercompTask",
+  .stack_size = 128 * 4,
+  .priority = (osPriority_t) osPriorityNormal,
+};
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
 
 /* USER CODE END FunctionPrototypes */
 
-void StartDefaultTask(void const * argument);
+void StartStorageTask(void *argument);
+void StartDisplayTask(void *argument);
+void StartAdjustTask(void *argument);
+void StartUppercompTask(void *argument);
 
-extern void MX_USB_DEVICE_Init(void);
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
-
-/* GetIdleTaskMemory prototype (linked to static allocation support) */
-void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize );
-
-/* USER CODE BEGIN GET_IDLE_TASK_MEMORY */
-static StaticTask_t xIdleTaskTCBBuffer;
-static StackType_t xIdleStack[configMINIMAL_STACK_SIZE];
-
-void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, StackType_t **ppxIdleTaskStackBuffer, uint32_t *pulIdleTaskStackSize )
-{
-  *ppxIdleTaskTCBBuffer = &xIdleTaskTCBBuffer;
-  *ppxIdleTaskStackBuffer = &xIdleStack[0];
-  *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
-  /* place for user code */
-}
-/* USER CODE END GET_IDLE_TASK_MEMORY */
 
 /**
   * @brief  FreeRTOS initialization
@@ -102,37 +115,102 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE END RTOS_QUEUES */
 
   /* Create the thread(s) */
-  /* definition and creation of defaultTask */
-  osThreadDef(defaultTask, StartDefaultTask, osPriorityNormal, 0, 128);
-  defaultTaskHandle = osThreadCreate(osThread(defaultTask), NULL);
+  /* creation of storageTask */
+  storageTaskHandle = osThreadNew(StartStorageTask, NULL, &storageTask_attributes);
+
+  /* creation of displayTask */
+  displayTaskHandle = osThreadNew(StartDisplayTask, NULL, &displayTask_attributes);
+
+  /* creation of adjustTask */
+  adjustTaskHandle = osThreadNew(StartAdjustTask, NULL, &adjustTask_attributes);
+
+  /* creation of uppercompTask */
+  uppercompTaskHandle = osThreadNew(StartUppercompTask, NULL, &uppercompTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
   /* USER CODE END RTOS_THREADS */
 
+  /* USER CODE BEGIN RTOS_EVENTS */
+  /* add events, ... */
+  /* USER CODE END RTOS_EVENTS */
+
 }
 
-/* USER CODE BEGIN Header_StartDefaultTask */
+/* USER CODE BEGIN Header_StartStorageTask */
 /**
-  * @brief  Function implementing the defaultTask thread.
+  * @brief  Function implementing the storageTask thread.
   * @param  argument: Not used
   * @retval None
   */
-/* USER CODE END Header_StartDefaultTask */
-void StartDefaultTask(void const * argument)
+/* USER CODE END Header_StartStorageTask */
+void StartStorageTask(void *argument)
 {
-  /* init code for USB_DEVICE */
-  MX_USB_DEVICE_Init();
-  /* USER CODE BEGIN StartDefaultTask */
+  /* USER CODE BEGIN StartStorageTask */
   /* Infinite loop */
   for(;;)
   {
     osDelay(1);
   }
-  /* USER CODE END StartDefaultTask */
+  /* USER CODE END StartStorageTask */
+}
+
+/* USER CODE BEGIN Header_StartDisplayTask */
+/**
+* @brief Function implementing the displayTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartDisplayTask */
+void StartDisplayTask(void *argument)
+{
+  /* USER CODE BEGIN StartDisplayTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END StartDisplayTask */
+}
+
+/* USER CODE BEGIN Header_StartAdjustTask */
+/**
+* @brief Function implementing the adjustTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartAdjustTask */
+void StartAdjustTask(void *argument)
+{
+  /* USER CODE BEGIN StartAdjustTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END StartAdjustTask */
+}
+
+/* USER CODE BEGIN Header_StartUppercompTask */
+/**
+* @brief Function implementing the uppercompTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartUppercompTask */
+void StartUppercompTask(void *argument)
+{
+  /* USER CODE BEGIN StartUppercompTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    osDelay(1);
+  }
+  /* USER CODE END StartUppercompTask */
 }
 
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
 
 /* USER CODE END Application */
+

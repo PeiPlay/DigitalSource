@@ -1,7 +1,17 @@
 #include "OledUI.h"
-#include "Config.h"
+#include "cmsis_os.h"
 #include <stdio.h>
-#include "DwtClock.h"
+
+void u8g2_DelayMs(uint32_t ms)
+{
+#if defined(osCMSIS)
+    osDelay(ms);
+#elif defined(DWT_CLOCK)
+    DwtClock_DelayMs(ms);
+#else
+    HAL_Delay(ms);
+#endif
+}
 
 
 static I2C_HandleTypeDef* oled_hi2c;
@@ -11,7 +21,7 @@ uint8_t u8g2_gpio_and_delay_stm32(U8X8_UNUSED u8x8_t *u8x8, U8X8_UNUSED uint8_t 
 	    case U8X8_MSG_GPIO_AND_DELAY_INIT:
 	        break;
 	    case U8X8_MSG_DELAY_MILLI:
-		    DwtClock_DelayMs(arg_int);
+		    u8g2_DelayMs(arg_int);
 	        break;
 	    case U8X8_MSG_GPIO_I2C_CLOCK:		
             break;

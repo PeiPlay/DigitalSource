@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "eeprom.h": "c",
-        "main.h": "c"
+        "main.h": "c",
+        "cmsis_os.h": "c",
+        "dwtclock.h": "c"
     }
 }

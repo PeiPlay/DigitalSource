@@ -40,6 +40,3 @@ digitalsource\stm32h7xx_hal_i2c_ex.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h
 digitalsource\stm32h7xx_hal_i2c_ex.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h
 digitalsource\stm32h7xx_hal_i2c_ex.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h
 digitalsource\stm32h7xx_hal_i2c_ex.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h
-digitalsource\stm32h7xx_hal_i2c_ex.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd.h
-digitalsource\stm32h7xx_hal_i2c_ex.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h
-digitalsource\stm32h7xx_hal_i2c_ex.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd_ex.h

@@ -1,4 +1,7 @@
-#pragma  once
+#ifndef __DWT_CLOCK_H
+#define __DWT_CLOCK_H
+#define DWT_CLOCK
+
 #include "main.h"
 
 //Dwt时钟初始化
@@ -19,3 +22,5 @@ void DwtClock_DelayMs(uint64_t ms);
 void DwtClock_OverflowProtect(void);
 //Dwt数据转换
 double DwtClock_ConvertCnt2Time(uint64_t cnt);
+
+#endif

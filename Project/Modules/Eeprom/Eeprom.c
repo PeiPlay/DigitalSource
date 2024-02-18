@@ -1,8 +1,19 @@
 #include "Eeprom.h"
-#include "DwtClock.h"
+#include "cmsis_os.h"
 
 #define _EEPROM_WRITE_ADDR(x) (x)
 #define _EEPROM_READ_ADDR(x) ((x) | 1)
+
+void _Eeprom_DelayMs(uint32_t ms)
+{
+#if defined(osCMSIS)
+    osDelay(ms);
+#elif defined(DWT_CLOCK)
+    DwtClock_DelayMs(ms);
+#else
+    HAL_Delay(ms);
+#endif
+}
 
 uint8_t _Eeprom_RequestValid(Eeprom_t* eeprom, uint16_t address, uint32_t size)
 {
@@ -14,7 +25,6 @@ uint8_t _Eeprom_RequestValid(Eeprom_t* eeprom, uint16_t address, uint32_t size)
     if(address + size > eeprom->total_size) return 0;
     return 1;
 }
-
 
 uint8_t _Eeprom_IsFifoFull(Eeprom_t* eeprom)
 {
@@ -142,7 +152,7 @@ void Eeprom_FifoProcess(Eeprom_t* eeprom)
                     data_in_rom_address, 
                     I2C_MEMADD_SIZE_16BIT, data, size, 0xff)
             );
-            DwtClock_DelayMs(3);
+            _Eeprom_DelayMs(3);
             return;
         }
         uint16_t address_head   = byte_per_page - (data_in_rom_address % byte_per_page);
@@ -160,7 +170,7 @@ void Eeprom_FifoProcess(Eeprom_t* eeprom)
                     I2C_MEMADD_SIZE_16BIT, 
                     data + address_offest, address_head, 0xff)
             );
-            DwtClock_DelayMs(3);
+            _Eeprom_DelayMs(3);
             address_offest += address_head;
         }
         //写入中间
@@ -174,7 +184,7 @@ void Eeprom_FifoProcess(Eeprom_t* eeprom)
                     I2C_MEMADD_SIZE_16BIT, 
                     data + address_offest, byte_per_page, 0xff)
             );
-            DwtClock_DelayMs(3);
+            _Eeprom_DelayMs(3);
             address_offest += byte_per_page;
         }
         //写入尾
@@ -188,7 +198,7 @@ void Eeprom_FifoProcess(Eeprom_t* eeprom)
                     I2C_MEMADD_SIZE_16BIT, 
                     data + address_offest, address_tail, 0xff)
             );
-            DwtClock_DelayMs(3);
+            _Eeprom_DelayMs(3);
         }
         goto Eeprom_FifoProcess_WriteFinished;
     }
@@ -202,7 +212,7 @@ void Eeprom_FifoProcess(Eeprom_t* eeprom)
                 I2C_MEMADD_SIZE_16BIT, 
                 data, size, 0xff)
         );
-        DwtClock_DelayMs(3);
+        _Eeprom_DelayMs(3);
         goto Eeprom_FifoProcess_ReadFinished;
     }
 

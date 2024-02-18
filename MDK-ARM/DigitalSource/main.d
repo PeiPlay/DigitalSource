@@ -41,10 +41,7 @@ digitalsource\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim.h
 digitalsource\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_tim_ex.h
 digitalsource\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart.h
 digitalsource\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_uart_ex.h
-digitalsource\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd.h
-digitalsource\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_ll_usb.h
-digitalsource\main.o: ../Drivers/STM32H7xx_HAL_Driver/Inc/stm32h7xx_hal_pcd_ex.h
-digitalsource\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS/cmsis_os.h
+digitalsource\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os.h
 digitalsource\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/FreeRTOS.h
 digitalsource\main.o: ../Core/Inc/FreeRTOSConfig.h
 digitalsource\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h
@@ -54,10 +51,7 @@ digitalsource\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/A
 digitalsource\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/mpu_wrappers.h
 digitalsource\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/task.h
 digitalsource\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/list.h
-digitalsource\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/timers.h
-digitalsource\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/queue.h
-digitalsource\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/semphr.h
-digitalsource\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/include/event_groups.h
+digitalsource\main.o: ../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h
 digitalsource\main.o: ../Core/Inc/adc.h
 digitalsource\main.o: ../Core/Inc/dma.h
 digitalsource\main.o: ../Core/Inc/fdcan.h
@@ -65,10 +59,5 @@ digitalsource\main.o: ../Core/Inc/hrtim.h
 digitalsource\main.o: ../Core/Inc/i2c.h
 digitalsource\main.o: ../Core/Inc/tim.h
 digitalsource\main.o: ../Core/Inc/usart.h
-digitalsource\main.o: ../USB_DEVICE/App/usb_device.h
-digitalsource\main.o: ../Middlewares/ST/STM32_USB_Device_Library/Core/Inc/usbd_def.h
-digitalsource\main.o: ../USB_DEVICE/Target/usbd_conf.h
-digitalsource\main.o: D:\programfiles\Keil_5\ARM\ARMCC\Bin\..\include\stdio.h
-digitalsource\main.o: D:\programfiles\Keil_5\ARM\ARMCC\Bin\..\include\stdlib.h
-digitalsource\main.o: D:\programfiles\Keil_5\ARM\ARMCC\Bin\..\include\string.h
 digitalsource\main.o: ../Core/Inc/gpio.h
+digitalsource\main.o: D:\programfiles\Keil_5\ARM\ARMCC\Bin\..\include\stdlib.h
