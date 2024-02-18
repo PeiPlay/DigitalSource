@@ -7,7 +7,6 @@
 
 #pragma once
 #include "main.h"
-#include "DwtClock.h"
 #define EEPROM_FIFO_QUEUE_SIZE  20
 #define EEPROM_FIFO_REQUEST_OVERTIME_MS 1
 

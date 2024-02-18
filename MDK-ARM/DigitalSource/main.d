@@ -61,3 +61,4 @@ digitalsource\main.o: ../Core/Inc/tim.h
 digitalsource\main.o: ../Core/Inc/usart.h
 digitalsource\main.o: ../Core/Inc/gpio.h
 digitalsource\main.o: D:\programfiles\Keil_5\ARM\ARMCC\Bin\..\include\stdlib.h
+digitalsource\main.o: ../Project/BoardSupportPackages/flash_bsp.h

@@ -31,6 +31,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include <stdlib.h>
+#include "flash_bsp.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -63,7 +64,10 @@ void MX_FREERTOS_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+FlashBsp_t flashBsp = {.sector = FLASH_SECTOR_2};
+static uint8_t arr1[5] = {0x01, 0x02 ,0x03, 0x04, 0x05};
+static uint8_t arr2[5] = {0xFF, 0xFF ,0xFF, 0xFF, 0xFF};
+static uint8_t arr3[5] = {0x05, 0x04 ,0x03, 0x02, 0x01};
 /* USER CODE END 0 */
 
 /**
@@ -103,7 +107,14 @@ int main(void)
   MX_ADC1_Init();
   MX_I2C4_Init();
   /* USER CODE BEGIN 2 */
- 
+  FlashBsp_Init(&flashBsp);
+  FlashBsp_Write(&flashBsp, arr1, 0, 5);
+  FlashBsp_Program(&flashBsp);
+  FlashBsp_Write(&flashBsp, arr2, 0, 5);
+  FlashBsp_Program(&flashBsp);
+  FlashBsp_Write(&flashBsp, arr3, 0, 5);
+  FlashBsp_Program(&flashBsp);
+  
   /* USER CODE END 2 */
 
   /* Init scheduler */

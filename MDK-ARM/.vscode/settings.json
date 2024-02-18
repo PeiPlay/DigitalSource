@@ -3,6 +3,7 @@
         "eeprom.h": "c",
         "main.h": "c",
         "cmsis_os.h": "c",
-        "dwtclock.h": "c"
+        "dwtclock.h": "c",
+        "stm32h7xx_hal_flash_ex.h": "c"
     }
 }
