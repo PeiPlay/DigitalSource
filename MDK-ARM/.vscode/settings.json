@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "hrpwm.h": "c",
+        "timedinterrupt.h": "c",
+        "channel.h": "c"
+    }
+}

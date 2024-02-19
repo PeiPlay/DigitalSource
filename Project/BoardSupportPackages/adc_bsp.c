@@ -21,7 +21,11 @@ uint16_t AdcBsp_GetValue(AdcBsp_t* adc, uint32_t noc)
 
 void AdcBsp_Deinit(AdcBsp_t* adc)
 {
-    if(adc->channels != NULL) free(adc->channels);
+    if(adc->channels != NULL) 
+    {
+        free(adc->channels);
+        adc->channels = NULL;
+    }
     HAL_ADC_Stop_DMA(adc->hadc);
 }
 

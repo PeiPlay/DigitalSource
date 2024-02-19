@@ -40,6 +40,8 @@ extern HRTIM_HandleTypeDef hhrtim;
 
 void MX_HRTIM_Init(void);
 
+void HAL_HRTIM_MspPostInit(HRTIM_HandleTypeDef *hhrtim);
+
 /* USER CODE BEGIN Prototypes */
 
 /* USER CODE END Prototypes */

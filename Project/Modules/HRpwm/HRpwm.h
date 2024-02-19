@@ -1,5 +1,6 @@
 #pragma once 
 #include "main.h"
+#include "hrtim.h"
 #include <stdbool.h>
 
 typedef struct 
