@@ -8,8 +8,7 @@
 #define FLASHBSP_SRAMBUF_SIZE (FLASHBSP_SRAMBUF_SIZE_KB * 1024)
 typedef struct
 {
-
-    __IO uint32_t sector;  
+    __IO uint32_t sector;
     __IO uint8_t sram_buf[FLASHBSP_SRAMBUF_SIZE];
 } FlashBsp_t;
 
@@ -19,4 +18,5 @@ void FlashBsp_Write(FlashBsp_t* flashBsp, uint8_t* data, uint32_t sram_addr, uin
 void FlashBsp_Read(FlashBsp_t* flashBsp, uint8_t* data, uint32_t sram_addr, uint32_t size);
 void FlashBsp_Erase(FlashBsp_t* flashBsp);
 void FlashBsp_Refresh(FlashBsp_t* flashBsp);
+void* FlashBsp_GetAddr(FlashBsp_t* flashBsp, uint32_t sram_addr);
 

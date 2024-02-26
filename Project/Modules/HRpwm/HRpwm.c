@@ -55,13 +55,16 @@ void HRpwm_Init(HRpwm_t* hrpwm)
    if(hrpwm->dutyLimit > 1.0f) hrpwm->dutyLimit = 1.0f;
    if(hrpwm->dutyLimit < 0.0f) hrpwm->dutyLimit = 0.0f;
    if(hrpwm->dutyLimit < 0.5f) hrpwm->dutyLimit = 0.5f - hrpwm->dutyLimit;
-
+   
    if(hrpwm->defaultDuty > hrpwm->dutyLimit) hrpwm->defaultDuty = hrpwm->dutyLimit;
    if(hrpwm->defaultDuty < (1.0f - hrpwm->dutyLimit)) hrpwm->defaultDuty = 1.0f - hrpwm->dutyLimit;
 
+   __HAL_HRTIM_SETCOMPARE(hrpwm->hhrtim, hrpwm->_timerIndex, HRTIM_COMPAREUNIT_1, (uint32_t)(hrpwm->defaultDuty * hrpwm->period));
+   
+   HAL_HRTIM_WaveformOutputStart(&hhrtim, OutputsToStart);
+   HAL_HRTIM_WaveformCounterStart(&hhrtim, (hrpwm->timerIdentifier) | HRTIM_TIMERID_MASTER);
 
-   HAL_HRTIM_WaveformOutputStart(hrpwm->hhrtim, OutputsToStart );
-   HAL_HRTIM_WaveformCounterStart(hrpwm->hhrtim, hrpwm->timerIdentifier | HRTIM_TIMERINDEX_MASTER);
+   
 }
 inline void HRpwm_SetDuty(HRpwm_t* hrpwm, float duty)
 {
@@ -74,6 +77,8 @@ inline float HRpwm_GetDuty(HRpwm_t* hrpwm)
 {
    return hrpwm->duty;
 }
+
+
 
 
 

@@ -2,8 +2,7 @@
 #include "HRpwm.h"
 #include "Sampler.h"
 #include "Pid.h"
-#include "cmsis_os.h"
-
+#include <stdbool.h>
 
 typedef struct
 {
@@ -16,13 +15,13 @@ typedef struct
         Sampler_t output_voltage;
     } sample;
     Pid_t pid;
+
 } Channel_t;
 
 //通道初始化
 void Channel_Init(Channel_t* channel);
 //周期性控制，需要在定时中断中调用
-void Channel_HrtimIT_Callback(Channel_t* channel);
-
+void Channel_Callback_TIM(Channel_t* channel);
 
 //设置输出电压
 void Channel_SetTargetVoltage(Channel_t* channel, float voltage);

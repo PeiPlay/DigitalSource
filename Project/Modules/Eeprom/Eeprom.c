@@ -1,5 +1,4 @@
 #include "Eeprom.h"
-#include "cmsis_os.h"
 #include "DwtClock.h"
 
 #define _EEPROM_WRITE_ADDR(x) (x)

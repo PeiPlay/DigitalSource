@@ -3,6 +3,7 @@
 
 void FlashBsp_Refresh(FlashBsp_t* flashBsp)
 {	
+	HAL_FLASH_Lock();
     HAL_FLASH_Unlock();
     __IO uint8_t* from = (uint8_t*)(0x08000000 + (uint32_t)flashBsp->sector*128*1024);
     for(uint32_t i = 0; i < FLASHBSP_SRAMBUF_SIZE; i++)
@@ -87,3 +88,7 @@ void FlashBsp_Erase(FlashBsp_t* flashBsp)
     FlashBsp_Refresh(flashBsp);
 }
 
+void* FlashBsp_GetAddr(FlashBsp_t* flashBsp, uint32_t sram_addr)
+{
+    return (void*)&flashBsp->sram_buf[sram_addr];
+}

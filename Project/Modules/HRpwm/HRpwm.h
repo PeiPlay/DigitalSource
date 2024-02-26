@@ -8,6 +8,7 @@ typedef struct
     HRTIM_HandleTypeDef* hhrtim;
     uint32_t timerIdentifier; //HRTIM_TIMERID_TIMER_X
     uint32_t _timerIndex; //HRTIM_TIMERINDEX_TIMER_X
+    uint32_t _outputChannel; 
     bool isInversed;
     float dutyLimit;
     float defaultDuty;  //初始化时设置的占空比

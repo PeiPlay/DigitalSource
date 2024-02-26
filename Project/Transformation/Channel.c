@@ -5,10 +5,11 @@ void Channel_Init(Channel_t* channel)
 {
     HRpwm_Init(&channel->transform.buck);
 	HRpwm_Init(&channel->transform.boost);
+    //Channel_Startup(channel);
 }
 
 //周期性控制，需要在高分辨率定时器的Master定时器period中断中调用
-void Channel_HrtimIT_Callback(Channel_t* channel)
+void Channel_Callback_TIM(Channel_t* channel)
 {
     float ratio = 
         Sampler_GetValueMapped(&channel->sample.source_voltage) / 
@@ -40,13 +41,6 @@ void Channel_SetTransformPid(Channel_t* channel, Pid_t pid)
 {
     channel->pid = pid;
 }
-
-
-
-
-
-
-
 
 
 

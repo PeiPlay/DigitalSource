@@ -1276,11 +1276,11 @@ ARM Macro Assembler    Page 20
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M7.fp.dp --apcs=
 interwork --depend=digitalsource\startup_stm32h743xx.d -odigitalsource\startup_
-stm32h743xx.o -I../Core/Inc -I.\RTE\_DigitalSource -ID:\programfiles\Keil_5\ARM
-\PACK\ARM\CMSIS\5.9.0\CMSIS\Core\Include -ID:\programfiles\Keil_5\ARM\PACK\Keil
-\STM32H7xx_DFP\3.1.1\Drivers\CMSIS\Device\ST\STM32H7xx\Include --predefine="__U
-VISION_VERSION SETA 524" --predefine="_RTE_ SETA 1" --predefine="STM32H743xx SE
-TA 1" --list=startup_stm32h743xx.lst startup_stm32h743xx.s
+stm32h743xx.o -I.\RTE\_DigitalSource -ID:\programfiles\Keil_5\ARM\PACK\ARM\CMSI
+S\5.9.0\CMSIS\Core\Include -ID:\programfiles\Keil_5\ARM\PACK\Keil\STM32H7xx_DFP
+\3.1.1\Drivers\CMSIS\Device\ST\STM32H7xx\Include --predefine="__UVISION_VERSION
+ SETA 524" --predefine="_RTE_ SETA 1" --predefine="STM32H743xx SETA 1" --list=s
+tartup_stm32h743xx.lst startup_stm32h743xx.s
 
 
 

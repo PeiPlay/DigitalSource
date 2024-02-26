@@ -6,9 +6,6 @@
                 "d:\\Coding\\Keil\\Git\\Keil_Project\\DigitalSource\\Core\\Inc",
                 "d:\\Coding\\Keil\\Git\\Keil_Project\\DigitalSource\\Drivers\\STM32H7xx_HAL_Driver\\Inc",
                 "d:\\Coding\\Keil\\Git\\Keil_Project\\DigitalSource\\Drivers\\STM32H7xx_HAL_Driver\\Inc\\Legacy",
-                "d:\\Coding\\Keil\\Git\\Keil_Project\\DigitalSource\\Middlewares\\Third_Party\\FreeRTOS\\Source\\include",
-                "d:\\Coding\\Keil\\Git\\Keil_Project\\DigitalSource\\Middlewares\\Third_Party\\FreeRTOS\\Source\\CMSIS_RTOS_V2",
-                "d:\\Coding\\Keil\\Git\\Keil_Project\\DigitalSource\\Middlewares\\Third_Party\\FreeRTOS\\Source\\portable\\RVDS\\ARM_CM4F",
                 "d:\\Coding\\Keil\\Git\\Keil_Project\\DigitalSource\\Drivers\\CMSIS\\Device\\ST\\STM32H7xx\\Include",
                 "d:\\Coding\\Keil\\Git\\Keil_Project\\DigitalSource\\Drivers\\CMSIS\\Include",
                 "d:\\Coding\\Keil\\Git\\Keil_Project\\DigitalSource\\Project\\BoardSupportPackages",
@@ -26,13 +23,12 @@
                 "d:\\Coding\\Keil\\Git\\Keil_Project\\DigitalSource\\Project\\Transformation",
                 "d:\\Coding\\Keil\\Git\\Keil_Project\\DigitalSource\\Middlewares\\Third_Party\\U8g2",
                 "d:\\Coding\\Keil\\Git\\Keil_Project\\DigitalSource\\Project\\Storage",
+                "d:\\Coding\\Keil\\Git\\Keil_Project\\DigitalSource\\Project\\Modules\\SimpleAlgo",
                 "D:\\programfiles\\Keil_5\\ARM\\ARMCC\\include",
                 "D:\\programfiles\\Keil_5\\ARM\\ARMCC\\include\\rw",
                 "d:\\Coding\\Keil\\Git\\Keil_Project\\DigitalSource\\MDK-ARM",
                 "d:\\Coding\\Keil\\Git\\Keil_Project\\DigitalSource\\Core\\Src",
-                "d:\\Coding\\Keil\\Git\\Keil_Project\\DigitalSource\\Drivers\\STM32H7xx_HAL_Driver\\Src",
-                "d:\\Coding\\Keil\\Git\\Keil_Project\\DigitalSource\\Middlewares\\Third_Party\\FreeRTOS\\Source",
-                "d:\\Coding\\Keil\\Git\\Keil_Project\\DigitalSource\\Middlewares\\Third_Party\\FreeRTOS\\Source\\portable\\MemMang"
+                "d:\\Coding\\Keil\\Git\\Keil_Project\\DigitalSource\\Drivers\\STM32H7xx_HAL_Driver\\Src"
             ],
             "defines": [
                 "USE_HAL_DRIVER",
