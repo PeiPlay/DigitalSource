@@ -6,9 +6,7 @@ void Control_Init(void)
 {
     //初始化ADC
     bsp_adc1 = BSP_ADC1_INIT;
-    bsp_adc2 = BSP_ADC2_INIT;
     AdcBsp_Init(&bsp_adc1);
-    AdcBsp_Init(&bsp_adc2);
     //初始化通道
     
 #ifdef CONTROL_CHANNEL0_INIT

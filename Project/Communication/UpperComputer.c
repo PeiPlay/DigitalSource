@@ -14,6 +14,7 @@ void UpperComputer_Init(void)
     //初始化Flash，并将数据读取到Sram
     upperComputer = UPPERCOMPUTER_INIT;
     upperComputer.uartstream.dataProcess = UpperComputer_DataProcess;
+	HAL_Delay(10);
     FlashBsp_Init(&upperComputer.flashmemory);
     //以UpperComputer_FlashData_t的形式获得Sram数据
     UpperComputer_FlashData_t* pflashData = (UpperComputer_FlashData_t*)FlashBsp_GetAddr(&upperComputer.flashmemory, 0);

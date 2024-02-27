@@ -25,14 +25,8 @@
 #include "Channel.h"
 
 extern AdcBsp_t bsp_adc1;
-extern AdcBsp_t bsp_adc2;
 #define BSP_ADC1_INIT (AdcBsp_t){                                   \
     .hadc = &hadc1,                                                 \
-    .ch_cnt = 1,                                                    \
-    .filt_rate = 4                                                  \
-}
-#define BSP_ADC2_INIT (AdcBsp_t){                                   \
-    .hadc = &hadc2,                                                 \
     .ch_cnt = 1,                                                    \
     .filt_rate = 4                                                  \
 }
@@ -66,16 +60,14 @@ extern Channel_t channels[];
     },                                                              \
     .sample = {                                                     \
         .output_voltage = {                                         \
-            .adc_arr = {&bsp_adc1},                                 \
-            .adc_cnt = 1,                                           \
-            .noc = 1,                                               \
+            .analog_arr = {{.hadc = &bsp_adc1, .noc = 1}},          \
+            .analog_cnt = 1,                                        \
             .map_k = 0.000755321f,                                  \
             .map_b = 0.0f                                           \
         },                                                          \
         .source_voltage = {                                         \
-            .adc_arr = {&bsp_adc1},                                 \
-            .adc_cnt = 1,                                           \
-            .noc = 1,                                               \
+            .analog_arr = {{.hadc = &bsp_adc1, .noc = 1}},          \
+            .analog_cnt = 1,                                        \
             .map_k = 0.0f,                                          \
             .map_b = 24.0f                                          \
         },                                                          \
@@ -90,7 +82,7 @@ extern Channel_t channels[];
 
 //*++++++++++++++++++++++++++上位机通信UpperComputer++++++++++++++++++++++++++*//
 #include "UpperComputer.h"
-#define UPPERCOMPUTER_ISACTIVE 0
+#define UPPERCOMPUTER_ISACTIVE 1
 extern UpperComputer_t upperComputer;
 
 #define UPPERCOMPUTER_INIT (UpperComputer_t){                       \
@@ -100,7 +92,8 @@ extern UpperComputer_t upperComputer;
         .frameTail = 0xA5A5                                         \
     },                                                              \
     .flashmemory = (FlashBsp_t) {                                   \
-        .sector = FLASH_SECTOR_3                                    \
+        .sector = FLASH_SECTOR_4,                                   \
+		.sram_buf = {0}												\
     }                                                               \
 }
 

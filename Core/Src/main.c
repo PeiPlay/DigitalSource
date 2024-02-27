@@ -67,7 +67,7 @@ double measure = 0;
 double target = 5.0;
 double buck_duty = 0;
 double boost_duty = 0;
-
+extern FlashBsp_t myflash;
 /* USER CODE END 0 */
 
 /**
@@ -83,8 +83,7 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-
-	HAL_Init();
+  HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -107,10 +106,10 @@ int main(void)
   MX_HRTIM_Init();
   MX_USART1_UART_Init();
   MX_ADC1_Init();
-  MX_ADC2_Init();
   MX_TIM1_Init();
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
+  
   Control_Init();
   UpperComputer_Init();
 
@@ -120,10 +119,6 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  measure = Sampler_GetValueMapped(&Control_GetChannel(0)->sample.output_voltage);
-	  Control_GetChannel(0)->pid.target = target;
-	  
-	  HAL_Delay(0);
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

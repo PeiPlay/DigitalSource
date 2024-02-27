@@ -88,9 +88,9 @@ typedef struct __attribute__((packed))
 } UpperComputer_DownloadFlashS_t; //上位机通信-下载Flash-Slave回传
 
 typedef struct 
-{
-    UartBsp_t uartstream;
+{	
     FlashBsp_t flashmemory;
+    UartBsp_t uartstream;
 } UpperComputer_t;
 
 void UpperComputer_Init(void);
