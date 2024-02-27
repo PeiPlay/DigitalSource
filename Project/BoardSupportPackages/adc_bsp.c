@@ -6,7 +6,9 @@ void AdcBsp_Init(AdcBsp_t* adc)
     adc->channels = malloc(adc->ch_cnt * adc->filt_rate * sizeof(uint16_t));
     if(adc->channels == NULL) Error_Handler();
     HAL_ADCEx_Calibration_Start(adc->hadc, ADC_CALIB_OFFSET, ADC_SINGLE_ENDED);
+	HAL_Delay(10);
     HAL_ADC_Start_DMA(&hadc1, (void*)adc->channels, adc->ch_cnt * adc->filt_rate);
+	HAL_Delay(10);
 }
 uint16_t AdcBsp_GetValue(AdcBsp_t* adc, uint32_t noc)
 {

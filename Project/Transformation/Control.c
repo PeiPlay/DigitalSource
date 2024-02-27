@@ -27,12 +27,14 @@ void Control_Init(void)
     {
         Channel_Init(&channels[i]);
     }
+	return;
+	
     //初始化定时中断
     controlStream = CONTROL_STREAM_INIT;
     controlStream.taskCount = 0;
     TimedInterrupt_AddTask(&controlStream, Control_Callback_TIM);
     TimedInterrupt_AddTask(&controlStream, DwtClock_OverflowProtect);
-    //TimedInterrupt_Init(&controlStream);
+    TimedInterrupt_Init(&controlStream);
 }
 
 void Control_Callback_TIM(void)

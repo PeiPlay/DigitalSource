@@ -28,12 +28,12 @@ extern AdcBsp_t bsp_adc1;
 extern AdcBsp_t bsp_adc2;
 #define BSP_ADC1_INIT (AdcBsp_t){                                   \
     .hadc = &hadc1,                                                 \
-    .ch_cnt = 2,                                                    \
+    .ch_cnt = 1,                                                    \
     .filt_rate = 4                                                  \
 }
 #define BSP_ADC2_INIT (AdcBsp_t){                                   \
     .hadc = &hadc2,                                                 \
-    .ch_cnt = 2,                                                    \
+    .ch_cnt = 1,                                                    \
     .filt_rate = 4                                                  \
 }
 
@@ -66,25 +66,25 @@ extern Channel_t channels[];
     },                                                              \
     .sample = {                                                     \
         .output_voltage = {                                         \
-            .adc_arr = {&bsp_adc1, &bsp_adc2},                      \
-            .adc_cnt = 2,                                           \
+            .adc_arr = {&bsp_adc1},                      \
+            .adc_cnt = 1,                                           \
             .noc = 1,                                               \
-            .map_k = 0.0008f,                                       \
+            .map_k = 0.000755321f,                                       \
             .map_b = 0.0f                                           \
         },                                                          \
         .source_voltage = {                                         \
-            .adc_arr = {&bsp_adc1, &bsp_adc2},                      \
-            .adc_cnt = 2,                                           \
-            .noc = 3,                                               \
-            .map_k = 0.0008f,                                       \
-            .map_b = 0.0f                                           \
+            .adc_arr = {&bsp_adc1},                      \
+            .adc_cnt = 1,                                           \
+            .noc = 1,                                               \
+            .map_k = 0.0f,                                       \
+            .map_b = 24.0f                                           \
         },                                                          \
     },                                                              \
     .pid = {                                                        \
-        .kp = 1.2,            .ki = 1.3,            .kd = 1.4,      \
-        .integral_startzone = 20.0f,    .integral_deadband  = 0,    \
-        .integral_max     	= 1.0f,     .integral_min       = 0,    \
-        .output_max         = 1.0f,     .output_min         = 0     \
+        .kp = 0,            .ki = 0.001,            .kd = 0.0,      \
+        .integral_startzone = 80.0f,    .integral_deadband  = 0,    \
+        .integral_max     	= 1000.0f,     .integral_min       = -1000.0,    \
+        .output_max         = 1000.0f,     .output_min         = -1000.0     \
     },                                                              \
 }
 
