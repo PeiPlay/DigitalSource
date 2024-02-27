@@ -27,7 +27,6 @@ void Control_Init(void)
     {
         Channel_Init(&channels[i]);
     }
-	return;
 	
     //初始化定时中断
     controlStream = CONTROL_STREAM_INIT;

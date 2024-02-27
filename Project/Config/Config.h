@@ -52,39 +52,39 @@ extern Channel_t channels[];
         .buck = {                                                   \
             .hhrtim = &hhrtim,                                      \
             .isInversed = 0,                                        \
-            .dutyLimit = 0.99f,                                     \
+            .dutyLimit = 0.90f,                                     \
             .timerIdentifier = HRTIM_TIMERID_TIMER_A,               \
             .defaultDuty = 0.5f,                                    \
         },                                                          \
         .boost = {                                                  \
             .hhrtim = &hhrtim,                                      \
             .isInversed = 0,                                        \
-            .dutyLimit = 0.99f,                                     \
+            .dutyLimit = 0.90f,                                     \
             .timerIdentifier = HRTIM_TIMERID_TIMER_B,               \
             .defaultDuty = 0.5f,                                    \
         }                                                           \
     },                                                              \
     .sample = {                                                     \
         .output_voltage = {                                         \
-            .adc_arr = {&bsp_adc1},                      \
+            .adc_arr = {&bsp_adc1},                                 \
             .adc_cnt = 1,                                           \
             .noc = 1,                                               \
-            .map_k = 0.000755321f,                                       \
+            .map_k = 0.000755321f,                                  \
             .map_b = 0.0f                                           \
         },                                                          \
         .source_voltage = {                                         \
-            .adc_arr = {&bsp_adc1},                      \
+            .adc_arr = {&bsp_adc1},                                 \
             .adc_cnt = 1,                                           \
             .noc = 1,                                               \
-            .map_k = 0.0f,                                       \
-            .map_b = 24.0f                                           \
+            .map_k = 0.0f,                                          \
+            .map_b = 24.0f                                          \
         },                                                          \
     },                                                              \
     .pid = {                                                        \
         .kp = 0,            .ki = 0.001,            .kd = 0.0,      \
-        .integral_startzone = 80.0f,    .integral_deadband  = 0,    \
-        .integral_max     	= 1000.0f,     .integral_min       = -1000.0,    \
-        .output_max         = 1000.0f,     .output_min         = -1000.0     \
+        .integral_startzone = 80.0f,   .integral_deadband = 0,      \
+        .integral_max     	= 1000.0f, .integral_min      = -1000.0,\
+        .output_max         = 1000.0f, .output_min        = -1000.0 \
     },                                                              \
 }
 

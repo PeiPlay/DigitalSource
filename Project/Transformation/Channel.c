@@ -4,19 +4,14 @@
 void Channel_Init(Channel_t* channel)
 {
     HRpwm_Init(&channel->transform.buck);
-	//HRpwm_Init(&channel->transform.boost);
-    //Channel_Startup(channel);
+	HRpwm_Init(&channel->transform.boost);
 }
 
 //周期性控制，需要在高分辨率定时器的Master定时器period中断中调用
 void Channel_Callback_TIM(Channel_t* channel)
 {
-//    float ratio = 
-//        Sampler_GetValueMapped(&channel->sample.source_voltage) / 
-//        Pid_Calculate(&channel->pid, Sampler_GetValueMapped(&channel->sample.output_voltage));
-
-	float ratio = 
-        24.0 / 
+    float ratio = 
+        Sampler_GetValueMapped(&channel->sample.source_voltage) / 
         Pid_Calculate(&channel->pid, Sampler_GetValueMapped(&channel->sample.output_voltage));
 	
     float delta = 0.5f * (ratio - 1.0f)/(ratio + 1.0f);

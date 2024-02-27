@@ -64,11 +64,10 @@ void PeriphCommonClock_Config(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 double measure = 0;
-double target = 10.0;
+double target = 5.0;
 double buck_duty = 0;
 double boost_duty = 0;
 
-FlashBsp_t flashbsp = {.sector = FLASH_SECTOR_3};
 /* USER CODE END 0 */
 
 /**
@@ -84,7 +83,8 @@ int main(void)
   /* MCU Configuration--------------------------------------------------------*/
 
   /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+
+	HAL_Init();
 
   /* USER CODE BEGIN Init */
 
@@ -112,10 +112,7 @@ int main(void)
   MX_TIM7_Init();
   /* USER CODE BEGIN 2 */
   Control_Init();
-  //UpperComputer_Init();
-
-
-
+  UpperComputer_Init();
 
   /* USER CODE END 2 */
 
@@ -123,8 +120,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  //measure = Sampler_GetValueMapped(&Control_GetChannel(0)->sample.output_voltage);
-	  //Control_GetChannel(0)->pid.target = target;
+	  measure = Sampler_GetValueMapped(&Control_GetChannel(0)->sample.output_voltage);
+	  Control_GetChannel(0)->pid.target = target;
 	  
 	  HAL_Delay(0);
     /* USER CODE END WHILE */
