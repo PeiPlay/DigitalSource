@@ -40,6 +40,7 @@ typedef struct __attribute__((packed))
 {
     uint8_t cmd;            //命令
     uint8_t channel;        //当前通道
+    uint8_t ch_num;         //通道数量
     uint32_t synCode;       //同步码: 由上位机产生一个随机数，下发给下位机。下位机收到后，将此随机数取反后返回给上位机。
 } UpperComputer_Lable_t; //上位机通信-包标签，用于命令识别
 
@@ -91,6 +92,7 @@ typedef struct
 {	
     FlashBsp_t flashmemory;
     UartBsp_t uartstream;
+	double flashProgramFlag;
 } UpperComputer_t;
 
 void UpperComputer_Init(void);

@@ -50,7 +50,7 @@ void MX_HRTIM_Init(void)
   {
     Error_Handler();
   }
-  pTimeBaseCfg.Period = 4800;
+  pTimeBaseCfg.Period = 3600;
   pTimeBaseCfg.RepetitionCounter = 0x00;
   pTimeBaseCfg.PrescalerRatio = HRTIM_PRESCALERRATIO_DIV1;
   pTimeBaseCfg.Mode = HRTIM_MODE_CONTINUOUS;

@@ -3,6 +3,7 @@
         "hrpwm.h": "c",
         "timedinterrupt.h": "c",
         "channel.h": "c",
-        "string": "c"
+        "string": "c",
+        "magnification.h": "c"
     }
 }

@@ -19,12 +19,14 @@ void UpperComputer_Init(void)
     //以UpperComputer_FlashData_t的形式获得Sram数据
     UpperComputer_FlashData_t* pflashData = (UpperComputer_FlashData_t*)FlashBsp_GetAddr(&upperComputer.flashmemory, 0);
     //如果CRC校验通过，则将数据写入通道参数
+	//pflashData->crc = 1;
     if(pflashData->crc == MathBsp_Crc16(&pflashData->channelParam, sizeof(UpperComputer_ParamInfo_t) * CONTROL_CHANNELS_NUM))
     {
         for(uint8_t i = 0; i < CONTROL_CHANNELS_NUM; i++)
         {
             Channel_t* channel = Control_GetChannel(i);
             UpperComputer_ParamInfo_t* param = &pflashData->channelParam[i];
+			channel->pid.target = param->target;
             channel->pid.kp = param->kp;
             channel->pid.ki = param->ki;
             channel->pid.kd = param->kd;
@@ -47,6 +49,7 @@ void UpperComputer_Init(void)
         {
             Channel_t* channel = Control_GetChannel(i);
             UpperComputer_ParamInfo_t* param = &pflashData->channelParam[i];
+			param->target = channel->pid.target;
             param->kp = channel->pid.kp;
             param->ki = channel->pid.ki;
             param->kd = channel->pid.kd;
@@ -72,8 +75,10 @@ void _UpperComputer_Responce_Lable(void* pmaster, void* pslave)
 {
     UpperComputer_Lable_t* master = (UpperComputer_Lable_t*)pmaster;
     UpperComputer_Lable_t* slave = (UpperComputer_Lable_t*)pslave;
+
     slave->cmd = master->cmd;
     slave->channel = master->channel;
+    slave->ch_num = CONTROL_CHANNELS_NUM;
     slave->synCode = ~master->synCode;
 }
 //处理上位机下发包的ChannelState部分到回传包
@@ -81,7 +86,7 @@ void _UpperComputer_Responce_ChannelState(void* pstate, uint8_t ch_num)
 {
     UpperComputer_ChannelState_t* state = (UpperComputer_ChannelState_t*)pstate;
     Channel_t* channel = Control_GetChannel(ch_num);
-    state->currentVoltage = Sampler_GetValueMapped(&(channel->sample.output_voltage));
+    state->currentVoltage = channel->pid.measure;
     state->targetVoltage = channel->pid.target;
 }
 //处理上位机的Heartbeat下发包并响应回传包
@@ -99,7 +104,26 @@ void UpperComputer_Responce_ReadFlash(UpperComputer_t* upper, UpperComputer_Read
     _UpperComputer_Responce_Lable(&readFlash->lable, &responce.lable);
     _UpperComputer_Responce_ChannelState(&responce.channelState, readFlash->lable.channel);
     Channel_t* channel = Control_GetChannel(readFlash->lable.channel);
+	
+	UpperComputer_FlashData_t* pflashData = (UpperComputer_FlashData_t*)FlashBsp_GetAddr(&upperComputer.flashmemory, 0);
+	UpperComputer_ParamInfo_t* param = &pflashData->channelParam[responce.lable.channel];
+	channel->pid.target = param->target;
+	channel->pid.kp = param->kp;
+	channel->pid.ki = param->ki;
+	channel->pid.kd = param->kd;
+	channel->pid.integral_startzone = param->integralStartzone;
+	channel->pid.integral_deadband = param->integralDeadband;
+	channel->pid.integral_max = param->integralMax;
+	channel->pid.integral_min = param->integralMin;
+	channel->pid.output_max = param->outputMax;
+	channel->pid.output_min = param->outputMin;
+	channel->sample.source_voltage.map_k = param->mapping_inputK;
+	channel->sample.source_voltage.map_b = param->mapping_inputB;
+	channel->sample.output_voltage.map_k = param->mapping_outputK;
+	channel->sample.output_voltage.map_b = param->mapping_outputB;
+	
     //写入通道对应的数据
+	responce.paramInfo.target = channel->pid.target;
     responce.paramInfo.kp = channel->pid.kp;
     responce.paramInfo.ki = channel->pid.ki;
     responce.paramInfo.kd = channel->pid.kd;
@@ -125,6 +149,7 @@ void UpperComputer_Responce_SetParam(UpperComputer_t* upper, UpperComputer_SetPa
     _UpperComputer_Responce_ChannelState(&responce.channelState, setParam->lable.channel);
     Channel_t* channel = Control_GetChannel(setParam->lable.channel);
     //向指定通道写入参数
+	channel->pid.target = setParam->paramInfo.target;
     channel->pid.kp = setParam->paramInfo.kp;
     channel->pid.ki = setParam->paramInfo.ki;
     channel->pid.kd = setParam->paramInfo.kd;
@@ -138,10 +163,7 @@ void UpperComputer_Responce_SetParam(UpperComputer_t* upper, UpperComputer_SetPa
     channel->sample.source_voltage.map_b = setParam->paramInfo.mapping_inputB;
     channel->sample.output_voltage.map_k = setParam->paramInfo.mapping_outputK;
     channel->sample.output_voltage.map_b = setParam->paramInfo.mapping_outputB;
-    //向sram中写入参数
-    UpperComputer_FlashData_t* pflashData = (UpperComputer_FlashData_t*)FlashBsp_GetAddr(&upper->flashmemory, 0);
-    pflashData->channelParam[setParam->lable.channel] = setParam->paramInfo;
-    
+
     UartBsp_Send(&upper->uartstream, (uint8_t*)&responce, sizeof(UpperComputer_SetParamS_t));
 }
 //处理上位机的DownloadFlash下发包并响应回传包
@@ -150,11 +172,31 @@ void UpperComputer_Responce_DownloadFlash(UpperComputer_t* upper, UpperComputer_
     UpperComputer_DownloadFlashS_t responce;
     _UpperComputer_Responce_Lable(&downloadFlash->lable, &responce.lable);
     _UpperComputer_Responce_ChannelState(&responce.channelState, downloadFlash->lable.channel);
-
+	UpperComputer_ParamInfo_t info;
     UpperComputer_FlashData_t* pflashData = (UpperComputer_FlashData_t*)FlashBsp_GetAddr(&upper->flashmemory, 0);
+	for(uint8_t i = 0; i < CONTROL_CHANNELS_NUM; i++)
+	{
+		Channel_t* channel = Control_GetChannel(i);
+		info.target = channel->pid.target;
+		info.kp = channel->pid.kp;
+		info.ki = channel->pid.ki;
+		info.kd = channel->pid.kd;
+		info.integralStartzone = channel->pid.integral_startzone;
+		info.integralDeadband = channel->pid.integral_deadband;
+		info.integralMax = channel->pid.integral_max;
+		info.integralMin = channel->pid.integral_min;
+		info.outputMax = channel->pid.output_max;
+		info.outputMin = channel->pid.output_min;
+		info.mapping_inputK = channel->sample.source_voltage.map_k;
+		info.mapping_inputB = channel->sample.source_voltage.map_b;
+		info.mapping_outputK = channel->sample.output_voltage.map_k;
+		info.mapping_outputB = channel->sample.output_voltage.map_b;
+		pflashData->channelParam[i] = info;		
+	}
     pflashData->crc = MathBsp_Crc16(&pflashData->channelParam, sizeof(UpperComputer_ParamInfo_t) * CONTROL_CHANNELS_NUM);
-    FlashBsp_Program(&upper->flashmemory);
-
+    FlashBsp_Write(&upper->flashmemory, (uint8_t*)pflashData, 0, sizeof(UpperComputer_FlashData_t));
+	//upper->flashProgramFlag = 1;
+	FlashBsp_Program(&upper->flashmemory);
     UartBsp_Send(&upper->uartstream, (uint8_t*)&responce, sizeof(UpperComputer_DownloadFlashM_t));
 }
 

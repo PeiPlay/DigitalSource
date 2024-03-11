@@ -10,10 +10,11 @@ float _Pid_Limit(float x, float upper, float lower)
     return x > upper ? upper : (x < lower ? lower : x);
 }
 
-inline float Pid_Calculate(Pid_t* pid, float measure)
+inline float Pid_Calculate(Pid_t* pid, float meas)
 {
     //计算误差值
-    float curr_err = pid->target - measure;
+	pid->measure = meas;
+    float curr_err = pid->target - pid->measure;
     //积分分离和误差死区
     if(_Pid_Abs(curr_err) <= pid->integral_startzone)
     {

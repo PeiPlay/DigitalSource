@@ -3,9 +3,8 @@
 
 void FlashBsp_Refresh(FlashBsp_t* flashBsp)
 {	
-	HAL_FLASH_Lock();
     HAL_FLASH_Unlock();
-    __IO uint8_t* from = (uint8_t*)(0x08000000 + (uint32_t)flashBsp->sector*128*1024);
+    __IO uint8_t* from = (uint8_t*)(0x08000000 + (uint32_t)(flashBsp->sector)*128*1024);
     for(uint32_t i = 0; i < FLASHBSP_SRAMBUF_SIZE; i++)
     {
         flashBsp->sram_buf[i] = from[i];
@@ -26,12 +25,14 @@ void FlashBsp_Program(FlashBsp_t* flashBsp)
     EraseInitStruct.Sector = flashBsp->sector;
     EraseInitStruct.NbSectors = 1;
     EraseInitStruct.VoltageRange = FLASH_VOLTAGE_RANGE_3;
+	EraseInitStruct.Banks = FLASH_BANK_1;
     uint32_t SectorError = 0;
     if(HAL_FLASHEx_Erase(&EraseInitStruct, &SectorError) != HAL_OK)
     {
         Error_Handler();
     }
-    __IO uint8_t* dest = (uint8_t*)(0x08000000 + (uint32_t)flashBsp->sector*128*1024);
+	FLASH_WaitForLastOperation(1000, FLASH_BANK_1);
+    __IO uint8_t* dest = (uint8_t*)(0x08000000 + (uint32_t)(flashBsp->sector)*128*1024);
 	__HAL_FLASH_CLEAR_FLAG(FLASH_FLAG_EOP | FLASH_FLAG_SNECCERR | FLASH_FLAG_WRPERR | FLASH_FLAG_BSY);
     for(uint32_t i = 0; i < FLASHBSP_SRAMBUF_SIZE / SIZE_OF_FLASHWORD; i++)
     {
@@ -79,6 +80,7 @@ void FlashBsp_Erase(FlashBsp_t* flashBsp)
     EraseInitStruct.Sector = flashBsp->sector;
     EraseInitStruct.NbSectors = 1;
     EraseInitStruct.VoltageRange = FLASH_VOLTAGE_RANGE_3;
+	EraseInitStruct.Banks = FLASH_BANK_1;
     uint32_t SectorError = 0;
     if(HAL_FLASHEx_Erase(&EraseInitStruct, &SectorError) != HAL_OK)
     {

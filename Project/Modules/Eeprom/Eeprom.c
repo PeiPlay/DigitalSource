@@ -4,6 +4,7 @@
 #define _EEPROM_WRITE_ADDR(x) (x)
 #define _EEPROM_READ_ADDR(x) ((x) | 1)
 
+
 void _Eeprom_DelayMs(uint32_t ms)
 {
 #if defined(osCMSIS)

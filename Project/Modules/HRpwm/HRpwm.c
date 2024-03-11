@@ -63,8 +63,6 @@ void HRpwm_Init(HRpwm_t* hrpwm)
    
    HAL_HRTIM_WaveformOutputStart(&hhrtim, OutputsToStart);
    HAL_HRTIM_WaveformCounterStart(&hhrtim, (hrpwm->timerIdentifier) | HRTIM_TIMERID_MASTER);
-
-   
 }
 inline void HRpwm_SetDuty(HRpwm_t* hrpwm, float duty)
 {

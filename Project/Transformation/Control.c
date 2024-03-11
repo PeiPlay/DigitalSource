@@ -8,7 +8,6 @@ void Control_Init(void)
     bsp_adc1 = BSP_ADC1_INIT;
     AdcBsp_Init(&bsp_adc1);
     //初始化通道
-    
 #ifdef CONTROL_CHANNEL0_INIT
     channels[0] = CONTROL_CHANNEL0_INIT;
 #endif

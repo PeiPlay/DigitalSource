@@ -49,3 +49,104 @@ uint16_t MathBsp_Crc16(void* pdata, uint32_t byte_len)
         crc = (crc << 8) ^ crc16_table[(crc >> 8) ^ (*data_p++)];
     return crc;
 }
+
+//当一个函数需要支持多种数据类型时，可以使用宏定义来生成多个函数
+#define MATHBSP_TYPEBASED_FUNC_DEFINITION_LIST(definition, func)                            \
+    definition(double,      func##_double)                                                  \
+    definition(float,       func##_float)                                                   \
+    definition(uint64_t,    func##_uint64)                                                  \
+    definition(int64_t,     func##_int64)                                                   \
+    definition(uint32_t,    func##_uint32)                                                  \
+    definition(int32_t,     func##_int32)                                                   \
+    definition(uint16_t,    func##_uint16)                                                  \
+    definition(int16_t,     func##_int16)                                                   \
+    definition(uint8_t,     func##_uint8)                                                   \
+    definition(int8_t,      func##_int8)
+
+
+//归并排序
+#define DEFINE_MERGESORT_FUNC(type, func_name)                                              \
+void _##func_name##_Merge(type* source, type* buff, uint32_t start, uint32_t mid, uint32_t end) {   \
+    uint32_t i = start, j = mid + 1, k = start;                                             \
+    while (i <= mid && j <= end) {                                                          \
+        if (source[i] <= source[j]) buff[k++] = source[i++];                                \
+        else buff[k++] = source[j++];                                                       \
+    }                                                                                       \
+    while (i <= mid) buff[k++] = source[i++];                                               \
+    while (j <= end) buff[k++] = source[j++];                                               \
+    for (i = start; i <= end; i++) source[i] = buff[i];                                     \
+}                                                                                           \
+void _##func_name##_Sort(type* source, type* buff, uint32_t start, uint32_t end) {          \
+    if(start >= end) return;                                                                \
+    uint32_t mid = (start + end) / 2;                                                       \
+    _##func_name##_Sort(source, buff, start, mid);                                          \
+    _##func_name##_Sort(source, buff, mid + 1, end);                                        \
+    _##func_name##_Merge(source, buff, start, mid, end);                                    \
+}                                                                                           \
+type* func_name(type* source, type* buff, uint32_t len) {                                   \
+    if(source != NULL && buff!= NULL && len > 1)                                            \
+        _##func_name##_Sort(source, buff, 0, len - 1);                                      \
+    return buff;                                                                            \
+}
+MATHBSP_TYPEBASED_FUNC_DEFINITION_LIST(DEFINE_MERGESORT_FUNC, MathBsp_MergeSort)
+
+//快速排序
+#define DEFINE_QUICKSORT_FUNC(type, func_name)                                              \
+uint32_t _##func_name##_Partition(type* source, uint32_t low, uint32_t high) {              \
+    type pivot = source[high];                                                              \
+    uint32_t i = (low - 1);                                                                 \
+    for (uint32_t j = low; j <= high - 1; j++) {                                            \
+        if (source[j] < pivot) {                                                            \
+            i++;                                                                            \
+            type t = source[i];                                                             \
+            source[i] = source[j];                                                          \
+            source[j] = t;                                                                  \
+        }                                                                                   \
+    }                                                                                       \
+    type t = source[i + 1];                                                                 \
+    source[i + 1] = source[high];                                                           \
+    source[high] = t;                                                                       \
+    return (i + 1);                                                                         \
+}                                                                                           \
+void _##func_name##_Sort(type* source, uint32_t low, uint32_t high) {                       \
+    if (low < high) {                                                                       \
+        uint32_t pi = _##func_name##_Partition(source, low, high);                          \
+        _##func_name##_Sort(source, low, pi - 1);                                           \
+        _##func_name##_Sort(source, pi + 1, high);                                          \
+    }                                                                                       \
+}                                                                                           \
+type* func_name(type* source, uint32_t len) {                                               \
+    _##func_name##_Sort(source, 0, len - 1);                                                \
+    return source;                                                                          \
+}
+MATHBSP_TYPEBASED_FUNC_DEFINITION_LIST(DEFINE_QUICKSORT_FUNC, MathBsp_QuickSort)
+
+
+//堆排序
+#define DEFINE_HEAPSORT_FUNC(type, func_name)                                               \
+void _##func_name##_Heapify(type* source, uint32_t len, uint32_t i) {                       \
+    uint32_t largest = i;                                                                   \
+    uint32_t l = 2 * i + 1;                                                                 \
+    uint32_t r = 2 * i + 2;                                                                 \
+    if (l < len && source[l] > source[largest]) largest = l;                                \
+    if (r < len && source[r] > source[largest]) largest = r;                                \
+    if (largest != i) {                                                                     \
+        type t = source[i];                                                                 \
+        source[i] = source[largest];                                                        \
+        source[largest] = t;                                                                \
+        _##func_name##_Heapify(source, len, largest);                                       \
+    }                                                                                       \
+}                                                                                           \
+type* func_name(type* source, uint32_t len) {                                               \
+    for (int i = len / 2 - 1; i >= 0; i--) _##func_name##_Heapify(source, len, i);          \
+    for (int i = len - 1; i > 0; i--) {                                                     \
+        type t = source[0];                                                                 \
+        source[0] = source[i];                                                              \
+        source[i] = t;                                                                      \
+        _##func_name##_Heapify(source, i, 0);                                               \
+    }                                                                                       \
+    return source;                                                                          \
+}
+MATHBSP_TYPEBASED_FUNC_DEFINITION_LIST(DEFINE_HEAPSORT_FUNC, MathBsp_HeapSort)
+
+

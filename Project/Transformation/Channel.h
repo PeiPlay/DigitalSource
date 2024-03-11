@@ -15,7 +15,6 @@ typedef struct
         Sampler_t output_voltage;
     } sample;
     Pid_t pid;
-
 } Channel_t;
 
 //通道初始化

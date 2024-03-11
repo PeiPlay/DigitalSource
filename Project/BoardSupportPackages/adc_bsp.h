@@ -7,15 +7,15 @@
 
 #include "main.h"
 #include "adc.h"
+#define ADCBSP_BUFFER_SIZE 256
 
 typedef struct 
 {
     ADC_HandleTypeDef* hadc; //ADC句柄
     uint32_t ch_cnt;            //通道数量
     uint32_t filt_rate;         //滤波倍数
-    uint16_t* channels;         //通道转换结果数组x
+    uint16_t channels[ADCBSP_BUFFER_SIZE];         //通道转换结果数组x
 } AdcBsp_t;
 
 void AdcBsp_Init(AdcBsp_t* adc);
 uint16_t AdcBsp_GetValue(AdcBsp_t* adc, uint32_t noc);
-void AdcBsp_Deinit(AdcBsp_t* adc);

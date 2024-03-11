@@ -34,8 +34,8 @@ extern AdcBsp_t bsp_adc1;
 extern TimedInterrupt_t controlStream;
 #define CONTROL_STREAM_INIT (TimedInterrupt_t){                     \
     .htim = &htim7,                                                 \
-    .intPeriod = 50,                                                \
-    .mode = TimedInterrupt_Mode_Independent,                        \
+    .intPeriod = 20,                                                \
+    .mode = TimedInterrupt_Mode_Independent,                   	    \
 }
 
 #define CONTROL_CHANNELS_NUM 1
@@ -73,10 +73,11 @@ extern Channel_t channels[];
         },                                                          \
     },                                                              \
     .pid = {                                                        \
-        .kp = 0,            .ki = 0.001,            .kd = 0.0,      \
+		.target = 36.0f,                                            \
+        .kp = 1.6,            .ki = 0.05,            .kd = 0.0,      \
         .integral_startzone = 80.0f,   .integral_deadband = 0,      \
-        .integral_max     	= 1000.0f, .integral_min      = -1000.0,\
-        .output_max         = 1000.0f, .output_min        = -1000.0 \
+        .integral_max     	= 60.0f, .integral_min      = -60.0,\
+        .output_max         = 80.0f, .output_min        = -80.0 \
     },                                                              \
 }
 
@@ -92,11 +93,10 @@ extern UpperComputer_t upperComputer;
         .frameTail = 0xA5A5                                         \
     },                                                              \
     .flashmemory = (FlashBsp_t) {                                   \
-        .sector = FLASH_SECTOR_4,                                   \
+        .sector = FLASH_SECTOR_3,                                   \
 		.sram_buf = {0}												\
     }                                                               \
 }
-
 
 
 

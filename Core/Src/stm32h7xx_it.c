@@ -235,6 +235,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     TimedInterrupt_Callback_TIM(&controlStream, htim);
 }
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+	UartBsp_ReceiveIT_Callback(huart, &upperComputer.uartstream);
+}
 
 
 
