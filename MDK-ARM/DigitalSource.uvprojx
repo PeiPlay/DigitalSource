@@ -311,8 +311,8 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>1</Optim>
-            <oTime>0</oTime>
+            <Optim>4</Optim>
+            <oTime>1</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
             <Strict>0</Strict>
@@ -731,16 +731,6 @@
               <FilePath>..\Project\BoardSupportPackages\uart_bsp.h</FilePath>
             </File>
             <File>
-              <FileName>usb_bsp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Project\BoardSupportPackages\usb_bsp.c</FilePath>
-            </File>
-            <File>
-              <FileName>usb_bsp.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Project\BoardSupportPackages\usb_bsp.h</FilePath>
-            </File>
-            <File>
               <FileName>math_bsp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Project\BoardSupportPackages\math_bsp.c</FilePath>
@@ -786,16 +776,6 @@
               <FilePath>..\Project\Modules\HRpwm\HRpwm.h</FilePath>
             </File>
             <File>
-              <FileName>OledUI.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Project\Modules\OledUI\OledUI.c</FilePath>
-            </File>
-            <File>
-              <FileName>OledUI.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Project\Modules\OledUI\OledUI.h</FilePath>
-            </File>
-            <File>
               <FileName>Pid.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Project\Modules\Pid\Pid.c</FilePath>
@@ -804,16 +784,6 @@
               <FileName>Pid.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Project\Modules\Pid\Pid.h</FilePath>
-            </File>
-            <File>
-              <FileName>RGB.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Project\Modules\RGB\RGB.c</FilePath>
-            </File>
-            <File>
-              <FileName>RGB.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Project\Modules\RGB\RGB.h</FilePath>
             </File>
             <File>
               <FileName>Sampler.c</FileName>
@@ -849,21 +819,6 @@
               <FileName>Config.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\Project\Config\Config.h</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>Display</GroupName>
-          <Files>
-            <File>
-              <FileName>Display.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Project\Display\Display.c</FilePath>
-            </File>
-            <File>
-              <FileName>Display.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\Project\Display\Display.h</FilePath>
             </File>
           </Files>
         </Group>

@@ -108,12 +108,11 @@ int main(void)
   MX_ADC1_Init();
   MX_TIM1_Init();
   MX_TIM7_Init();
+  
   /* USER CODE BEGIN 2 */
   
-     
-  
   Control_Init();
-  UpperComputer_Init();
+  //UpperComputer_Init();
 
   /* USER CODE END 2 */
 

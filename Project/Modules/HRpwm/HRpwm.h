@@ -1,7 +1,6 @@
 #pragma once 
 #include "main.h"
 #include "hrtim.h"
-#include <stdbool.h>
 
 typedef struct 
 {
@@ -9,7 +8,7 @@ typedef struct
     uint32_t timerIdentifier; //HRTIM_TIMERID_TIMER_X
     uint32_t _timerIndex; //HRTIM_TIMERINDEX_TIMER_X
     uint32_t _outputChannel; 
-    bool isInversed;
+    uint8_t isInversed;
     float dutyLimit;
     float defaultDuty;  //初始化时设置的占空比
     uint32_t period;

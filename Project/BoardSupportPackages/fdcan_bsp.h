@@ -3,8 +3,6 @@
 #include "main.h"
 #include "fdcan.h"
 
-extern uint8_t cmd_feedback[8];
-
 #define FDCAN_TRANSMIT_ID_STD                   (0 << 0)//000
 #define FDCAN_TRANSMIT_ID_EXT                   (1 << 0)//001
 // 发送数据帧类型

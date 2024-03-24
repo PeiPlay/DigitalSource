@@ -2,7 +2,6 @@
 #include "HRpwm.h"
 #include "Sampler.h"
 #include "Pid.h"
-#include <stdbool.h>
 
 typedef struct
 {

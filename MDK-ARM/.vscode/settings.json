@@ -4,6 +4,13 @@
         "timedinterrupt.h": "c",
         "channel.h": "c",
         "string": "c",
-        "magnification.h": "c"
+        "magnification.h": "c",
+        "array": "c",
+        "string_view": "c",
+        "sampler.h": "c",
+        "adc_bsp.h": "c",
+        "pid.h": "c",
+        "config.h": "c",
+        "main.h": "c"
     }
 }

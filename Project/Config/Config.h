@@ -14,12 +14,9 @@
 #include "DwtClock.h"
 #include "Eeprom.h"
 #include "HRpwm.h"
-#include "OledUI.h"
 #include "Pid.h"
-#include "RGB.h"
 #include "Sampler.h"
 #include "TimedInterrupt.h"
-
 //*++++++++++++++++++++++++++电压变换Transformation++++++++++++++++++++++++++*//
 #include "Control.h"
 #include "Channel.h"
@@ -74,10 +71,10 @@ extern Channel_t channels[];
     },                                                              \
     .pid = {                                                        \
 		.target = 36.0f,                                            \
-        .kp = 1.6,            .ki = 0.05,            .kd = 0.0,      \
+        .kp = 0,            .ki = 0.05,            .kd = 0,     	\
         .integral_startzone = 80.0f,   .integral_deadband = 0,      \
-        .integral_max     	= 60.0f, .integral_min      = -60.0,\
-        .output_max         = 80.0f, .output_min        = -80.0 \
+        .integral_max     	= 60.0f, .integral_min      = -60.0,	\
+        .output_max         = 80.0f, .output_min        = -80.0 	\
     },                                                              \
 }
 

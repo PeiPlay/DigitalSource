@@ -2,6 +2,42 @@
 #include "UpperComputer.h"
 #include "Config.h"
 
+
+void __UpperComputer_ChannelToParamInfo(Channel_t* channel, UpperComputer_ParamInfo_t* param)
+{
+    param->target = channel->pid.target;
+    param->kp = channel->pid.kp;
+    param->ki = channel->pid.ki;
+    param->kd = channel->pid.kd;
+    param->integralStartzone = channel->pid.integral_startzone;
+    param->integralDeadband = channel->pid.integral_deadband;
+    param->integralMax = channel->pid.integral_max;
+    param->integralMin = channel->pid.integral_min;
+    param->outputMax = channel->pid.output_max;
+    param->outputMin = channel->pid.output_min;
+    param->mapping_inputK = channel->sample.source_voltage.map_k;
+    param->mapping_inputB = channel->sample.source_voltage.map_b;
+    param->mapping_outputK = channel->sample.output_voltage.map_k;
+    param->mapping_outputB = channel->sample.output_voltage.map_b;
+}
+void __UpperComputer_ParamInfoToChannel(UpperComputer_ParamInfo_t* param, Channel_t* channel)
+{
+    channel->pid.target = param->target;
+    channel->pid.kp = param->kp;
+    channel->pid.ki = param->ki;
+    channel->pid.kd = param->kd;
+    channel->pid.integral_startzone = param->integralStartzone;
+    channel->pid.integral_deadband = param->integralDeadband;
+    channel->pid.integral_max = param->integralMax;
+    channel->pid.integral_min = param->integralMin;
+    channel->pid.output_max = param->outputMax;
+    channel->pid.output_min = param->outputMin;
+    channel->sample.source_voltage.map_k = param->mapping_inputK;
+    channel->sample.source_voltage.map_b = param->mapping_inputB;
+    channel->sample.output_voltage.map_k = param->mapping_outputK;
+    channel->sample.output_voltage.map_b = param->mapping_outputB;
+}
+
 typedef struct __attribute__((packed))
 {
     UpperComputer_ParamInfo_t channelParam[CONTROL_CHANNELS_NUM];
@@ -26,20 +62,7 @@ void UpperComputer_Init(void)
         {
             Channel_t* channel = Control_GetChannel(i);
             UpperComputer_ParamInfo_t* param = &pflashData->channelParam[i];
-			channel->pid.target = param->target;
-            channel->pid.kp = param->kp;
-            channel->pid.ki = param->ki;
-            channel->pid.kd = param->kd;
-            channel->pid.integral_startzone = param->integralStartzone;
-            channel->pid.integral_deadband = param->integralDeadband;
-            channel->pid.integral_max = param->integralMax;
-            channel->pid.integral_min = param->integralMin;
-            channel->pid.output_max = param->outputMax;
-            channel->pid.output_min = param->outputMin;
-            channel->sample.source_voltage.map_k = param->mapping_inputK;
-            channel->sample.source_voltage.map_b = param->mapping_inputB;
-            channel->sample.output_voltage.map_k = param->mapping_outputK;
-            channel->sample.output_voltage.map_b = param->mapping_outputB;
+            __UpperComputer_ParamInfoToChannel(param, channel);
         }
     }
     else
@@ -49,20 +72,7 @@ void UpperComputer_Init(void)
         {
             Channel_t* channel = Control_GetChannel(i);
             UpperComputer_ParamInfo_t* param = &pflashData->channelParam[i];
-			param->target = channel->pid.target;
-            param->kp = channel->pid.kp;
-            param->ki = channel->pid.ki;
-            param->kd = channel->pid.kd;
-            param->integralStartzone = channel->pid.integral_startzone;
-            param->integralDeadband = channel->pid.integral_deadband;
-            param->integralMax = channel->pid.integral_max;
-            param->integralMin = channel->pid.integral_min;
-            param->outputMax = channel->pid.output_max;
-            param->outputMin = channel->pid.output_min;
-            param->mapping_inputK = channel->sample.source_voltage.map_k;
-            param->mapping_inputB = channel->sample.source_voltage.map_b;
-            param->mapping_outputK = channel->sample.output_voltage.map_k;
-            param->mapping_outputB = channel->sample.output_voltage.map_b;
+            __UpperComputer_ChannelToParamInfo(channel, param);
         }
         pflashData->crc = MathBsp_Crc16(&pflashData->channelParam, sizeof(UpperComputer_ParamInfo_t) * CONTROL_CHANNELS_NUM);
         FlashBsp_Write(&upperComputer.flashmemory, (uint8_t*)pflashData, 0, sizeof(UpperComputer_FlashData_t));
@@ -107,37 +117,9 @@ void UpperComputer_Responce_ReadFlash(UpperComputer_t* upper, UpperComputer_Read
 	
 	UpperComputer_FlashData_t* pflashData = (UpperComputer_FlashData_t*)FlashBsp_GetAddr(&upperComputer.flashmemory, 0);
 	UpperComputer_ParamInfo_t* param = &pflashData->channelParam[responce.lable.channel];
-	channel->pid.target = param->target;
-	channel->pid.kp = param->kp;
-	channel->pid.ki = param->ki;
-	channel->pid.kd = param->kd;
-	channel->pid.integral_startzone = param->integralStartzone;
-	channel->pid.integral_deadband = param->integralDeadband;
-	channel->pid.integral_max = param->integralMax;
-	channel->pid.integral_min = param->integralMin;
-	channel->pid.output_max = param->outputMax;
-	channel->pid.output_min = param->outputMin;
-	channel->sample.source_voltage.map_k = param->mapping_inputK;
-	channel->sample.source_voltage.map_b = param->mapping_inputB;
-	channel->sample.output_voltage.map_k = param->mapping_outputK;
-	channel->sample.output_voltage.map_b = param->mapping_outputB;
-	
+    __UpperComputer_ParamInfoToChannel(param, channel);
     //写入通道对应的数据
-	responce.paramInfo.target = channel->pid.target;
-    responce.paramInfo.kp = channel->pid.kp;
-    responce.paramInfo.ki = channel->pid.ki;
-    responce.paramInfo.kd = channel->pid.kd;
-    responce.paramInfo.integralStartzone = channel->pid.integral_startzone;
-    responce.paramInfo.integralDeadband = channel->pid.integral_deadband;
-    responce.paramInfo.integralMax = channel->pid.integral_max;
-    responce.paramInfo.integralMin = channel->pid.integral_min;
-    responce.paramInfo.outputMax = channel->pid.output_max;
-    responce.paramInfo.outputMin = channel->pid.output_min;
-    responce.paramInfo.mapping_inputK = channel->sample.source_voltage.map_k;
-    responce.paramInfo.mapping_inputB = channel->sample.source_voltage.map_b;
-    responce.paramInfo.mapping_outputK = channel->sample.output_voltage.map_k;
-    responce.paramInfo.mapping_outputB = channel->sample.output_voltage.map_b;
-
+    __UpperComputer_ChannelToParamInfo(channel, &responce.paramInfo);
     UartBsp_Send(&upper->uartstream, (uint8_t*)&responce, sizeof(UpperComputer_ReadFlashS_t));
 }
 //处理上位机的SetParam下发包并响应回传包
@@ -149,21 +131,7 @@ void UpperComputer_Responce_SetParam(UpperComputer_t* upper, UpperComputer_SetPa
     _UpperComputer_Responce_ChannelState(&responce.channelState, setParam->lable.channel);
     Channel_t* channel = Control_GetChannel(setParam->lable.channel);
     //向指定通道写入参数
-	channel->pid.target = setParam->paramInfo.target;
-    channel->pid.kp = setParam->paramInfo.kp;
-    channel->pid.ki = setParam->paramInfo.ki;
-    channel->pid.kd = setParam->paramInfo.kd;
-    channel->pid.integral_startzone = setParam->paramInfo.integralStartzone;
-    channel->pid.integral_deadband = setParam->paramInfo.integralDeadband;
-    channel->pid.integral_max = setParam->paramInfo.integralMax;
-    channel->pid.integral_min = setParam->paramInfo.integralMin;
-    channel->pid.output_max = setParam->paramInfo.outputMax;
-    channel->pid.output_min = setParam->paramInfo.outputMin;
-    channel->sample.source_voltage.map_k = setParam->paramInfo.mapping_inputK;
-    channel->sample.source_voltage.map_b = setParam->paramInfo.mapping_inputB;
-    channel->sample.output_voltage.map_k = setParam->paramInfo.mapping_outputK;
-    channel->sample.output_voltage.map_b = setParam->paramInfo.mapping_outputB;
-
+    __UpperComputer_ParamInfoToChannel(&setParam->paramInfo, channel);
     UartBsp_Send(&upper->uartstream, (uint8_t*)&responce, sizeof(UpperComputer_SetParamS_t));
 }
 //处理上位机的DownloadFlash下发包并响应回传包
@@ -177,25 +145,11 @@ void UpperComputer_Responce_DownloadFlash(UpperComputer_t* upper, UpperComputer_
 	for(uint8_t i = 0; i < CONTROL_CHANNELS_NUM; i++)
 	{
 		Channel_t* channel = Control_GetChannel(i);
-		info.target = channel->pid.target;
-		info.kp = channel->pid.kp;
-		info.ki = channel->pid.ki;
-		info.kd = channel->pid.kd;
-		info.integralStartzone = channel->pid.integral_startzone;
-		info.integralDeadband = channel->pid.integral_deadband;
-		info.integralMax = channel->pid.integral_max;
-		info.integralMin = channel->pid.integral_min;
-		info.outputMax = channel->pid.output_max;
-		info.outputMin = channel->pid.output_min;
-		info.mapping_inputK = channel->sample.source_voltage.map_k;
-		info.mapping_inputB = channel->sample.source_voltage.map_b;
-		info.mapping_outputK = channel->sample.output_voltage.map_k;
-		info.mapping_outputB = channel->sample.output_voltage.map_b;
+        __UpperComputer_ChannelToParamInfo(channel, &info);
 		pflashData->channelParam[i] = info;		
 	}
     pflashData->crc = MathBsp_Crc16(&pflashData->channelParam, sizeof(UpperComputer_ParamInfo_t) * CONTROL_CHANNELS_NUM);
     FlashBsp_Write(&upper->flashmemory, (uint8_t*)pflashData, 0, sizeof(UpperComputer_FlashData_t));
-	//upper->flashProgramFlag = 1;
 	FlashBsp_Program(&upper->flashmemory);
     UartBsp_Send(&upper->uartstream, (uint8_t*)&responce, sizeof(UpperComputer_DownloadFlashM_t));
 }

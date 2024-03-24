@@ -1,5 +1,4 @@
 #include "adc_bsp.h"
-#include <stdlib.h>
 
 void AdcBsp_Init(AdcBsp_t* adc)
 {
